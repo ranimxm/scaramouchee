@@ -7,13 +7,13 @@
     "display": "standalone",
     "icons": [
         {
-        "src": "image/logo240.png",
-        "sizes": "840x542",
+        "src": "image/s.png",
+        "sizes": "195x195",
         "type": "image/png"
     },
     {
         "src": "image/sa.png",
-        "sizes": "722x722",
+        "sizes": "620x620",
         "type": "image/png"
     }
 ]
