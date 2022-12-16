@@ -7,3 +7,7 @@ if ("serviceWorker" in navigator) {
         console.log(error);
     });
 }
+
+var music = new Audio ("/audio/good-6081.mp3");
+
+music.play();

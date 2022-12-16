@@ -2,8 +2,8 @@
     "name": "Scaramouche",
     "short_name": "Scaramouche",
     "start_url": ".",
-   "background_color": "#262161",
-    "theme_color": "#262161",
+   "background_color": "#322d6c",
+    "theme_color": "#322d6c",
     "display": "standalone",
     "icons": [
         {
