@@ -1,8 +1,8 @@
 {
-    "name": "dcode PWA example",
-    "short_name": "dcode PWA example",
+    "name": "Scaramouche",
+    "short_name": "Scaramouche",
     "start_url": ".",
-   "background_color": "#6dcdb1",
+   "background_color": "#262161",
     "theme_color": "#262161",
     "display": "standalone",
     "icons": [
@@ -12,8 +12,8 @@
         "type": "image/png"
     },
     {
-        "src": "image/sss.png",
-        "sizes": "512x512",
+        "src": "image/sa.png",
+        "sizes": "722x722",
         "type": "image/png"
     }
 ]
