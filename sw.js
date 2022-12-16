@@ -1,7 +1,11 @@
 self.addEventListener("install", e => {
     console.log("install");
 });
-
+// e.waitUntil(
+//     caches.open("statics").then(cache => {
+//         return cache.addAll(["./", "./src/style.css", "./image/logo192.png"]);
+//     })
+// );
 //  self.addEventListener("fetch", e => {
 //     e.respondWith(
 //         caches.match(e.request).then(response => {
