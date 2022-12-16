@@ -6,8 +6,8 @@
     "theme_color": "#009578",
     "display": "standalone",
     "icons": [{
-        "src": "image/logo192.png",
-        "size": "192x192",
+        "src": "image/logo240.png",
+        "size": "240x240",
         "type": "image/png"
     },
     {
