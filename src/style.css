@@ -12,10 +12,10 @@ html {
   body{
     height: auto;
     max-width: 100%;
-    /* background-image: url(/image/eovtdc8ll32a1.webp); */
+     /* background-image: url(/image/eovtdc8ll32a1.webp);
     background-repeat: no-repeat;
     background-size: cover;
-  
+   */
   }
   .flip-card {
     position: relative;
@@ -144,11 +144,11 @@ html {
     .img{
         display: none;
     }
-    body{
-        /* background-image: url(/image/eovtdc8ll32a1.webp); */
+    /* body{
+         background-image: url(/image/eovtdc8ll32a1.webp);
         background-attachment: fixed;
         background-size: cover;
-    }
+    } */
     .container{
         width: 80%;
     }
