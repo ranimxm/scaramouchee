@@ -9,5 +9,6 @@ if ("serviceWorker" in navigator) {
 }
 
 var music = new Audio ("/audio/good-6081.mp3");
-
-music.play();
+function audio(){
+    music.play();
+}
