@@ -7,7 +7,12 @@
   
 html {
   height: 100%;
-  overflow-x:hidden;
+  background-image: url("/image/kkk.jpg");
+  background-size: 100% 200vh; 
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+
 }
 
 
@@ -16,15 +21,9 @@ html {
   display: flex;
   justify-content:center ;
   align-items: center;
-
   height: 100vh; 
   max-width: 100%;
   width: 100%;
-   background-image: url("/image/kkk.jpg");
-  background-size: 100% 200vh; 
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
 }
 .text{
   height: auto;
@@ -35,11 +34,29 @@ html {
 
 .container{
   height:auto;
-  background-color:red;
+  padding: 3em;
+  background-color:rgba(88, 22, 154, 0.816);
+  display: column;
+  flex-direction: row;
+  gap: 1em;
+}
+.boxes{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1em;
+}
+.box{
+  height: auto;
+  padding: 1em;
+  width: 20rem;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.57);
+
 }
 
 @media (max-width: 768px){
-  .parallax {
+  html {
     background-size: 100% 100%; 
   }
 }
