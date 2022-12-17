@@ -7,6 +7,39 @@
   
 html {
     height: 100%;
+    margin: 0;
+  font-family:Helvetica,Sans-serif;
+  overflow-x:hidden;
 }
-  
+
+
+
+.parallax {
+  height: 200vh;
+  background-image: url("/image/kkk.jpg");
+  background-repeat: no-repeat;
+    background-size: contain;
+  /* overflow-x: hidden;
+  perspective: 1px; */
+}
+
+.parallax-layer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.layer1 {
+  transform: translateZ(0);
+}
+
+.layer2 {
+  transform: translateZ(-1px);
+}
+
+.layer3 {
+  transform: translateZ(-2px);
+}
 
