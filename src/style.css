@@ -6,40 +6,40 @@
 }
   
 html {
-    height: 100%;
-    margin: 0;
-  font-family:Helvetica,Sans-serif;
+  height: 100%;
   overflow-x:hidden;
 }
 
 
 
 .parallax {
-  height: 200vh;
-  background-image: url("/image/kkk.jpg");
+  display: flex;
+  justify-content:center ;
+  align-items: center;
+
+  height: 100vh; 
+  max-width: 100%;
+  width: 100%;
+   background-image: url("/image/kkk.jpg");
+  background-size: 100% 200vh; 
+  background-attachment: fixed;
+  background-position: center;
   background-repeat: no-repeat;
-    background-size: contain;
-  /* overflow-x: hidden;
-  perspective: 1px; */
+}
+.text{
+  height: auto;
+  padding: 1em;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.57);
 }
 
-.parallax-layer {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+.container{
+  height:auto;
+  background-color:red;
 }
 
-.layer1 {
-  transform: translateZ(0);
+@media (max-width: 768px){
+  .parallax {
+    background-size: 100% 100%; 
+  }
 }
-
-.layer2 {
-  transform: translateZ(-1px);
-}
-
-.layer3 {
-  transform: translateZ(-2px);
-}
-
