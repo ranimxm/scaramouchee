@@ -314,6 +314,12 @@ ul li.playing{
   ::-webkit-scrollbar {
     width: 0;
   }
+  header{
+    padding: 0 10px;
+  }
+  header img{
+    width: 40%;
+  }
 
   html {
     background-size: 100% 100%; 
