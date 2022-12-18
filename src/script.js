@@ -232,6 +232,8 @@ function clicked(element){
   playMusic();
   playingSong();
 }
+
+
 async function start(){
   await mainAudio.play();
 
@@ -243,24 +245,14 @@ async function start(){
         { src: 'image/s.png',   sizes: '195x195',   type: 'image/png' },
       ]
     });
-  
-    // TODO: Update playback state.
-  } 
-}
 
+  } 
+};
 const actionHandlers = [
-  ['play',          () => { /* ... */ }],
-  ['pause',         () => { /* ... */ }],
-  ['previoustrack', () => { /* ... */ }],
-  ['nexttrack',     () => { /* ... */ }],
-  ['stop',          () => { /* ... */ }],
-  ['seekbackward',  (details) => { /* ... */ }],
-  ['seekforward',   (details) => { /* ... */ }],
-  ['seekto',        (details) => { /* ... */ }],
-  /* Video conferencing actions */
-  ['togglemicrophone', () => { /* ... */ }],
-  ['togglecamera',     () => { /* ... */ }],
-  ['hangup',           () => { /* ... */ }],
+  ['play',          () => {playMusic()}],
+  ['pause',         () => {pauseMusic()}],
+  ['previoustrack', () => { prevMusic() }],
+  ['nexttrack',     () => { nextMusic() }],
 ];
 
 for (const [action, handler] of actionHandlers) {
@@ -281,56 +273,4 @@ navigator.mediaSession.setActionHandler('pause', () => {
   mainAudio.pause();
 });
 
-mainAudio.addEventListener('play', () => {
-  navigator.mediaSession.playbackState = 'playing';
-});
 
-mainAudio.addEventListener('pause', () => {
-  navigator.mediaSession.playbackState = 'paused';
-});
-
-navigator.mediaSession.setActionHandler('previoustrack', () => {
-  // Play previous track.
-});
-navigator.mediaSession.setActionHandler('nexttrack', () => {
-  // Play next track.
-});
-navigator.mediaSession.setActionHandler('stop', () => {
-  // Stop playback and clear state if appropriate.
-});
-
-const defaultSkipTime = 10; /* Time to skip in seconds by default */
-
-navigator.mediaSession.setActionHandler('seekbackward', (details) => {
-  const skipTime = details.seekOffset || defaultSkipTime;
-  mainAudio.currentTime = Math.max(mainAudio.currentTime - skipTime, 0);
-  // TODO: Update playback state.
-});
-
-navigator.mediaSession.setActionHandler('seekforward', (details) => {
-  const skipTime = details.seekOffset || defaultSkipTime;
-  mainAudio.currentTime = Math.min(mainAudio.currentTime + skipTime, mainAudio.duration);
-  // TODO: Update playback state.
-});
-
-
-navigator.mediaSession.setActionHandler('seekto', (details) => {
-  if (details.fastSeek && 'fastSeek' in mainAudio) {
-    // Only use fast seek if supported.
-    video.fastSeek(details.seekTime);
-    return;
-  }
-  mainAudio.currentTime = details.seekTime;
-  // TODO: Update playback state.
-});
-const video = document.querySelector('video');
-
-function updatePositionState() {
-  if ('setPositionState' in navigator.mediaSession) {
-    navigator.mediaSession.setPositionState({
-      duration: video.duration,
-      playbackRate: video.playbackRate,
-      position: video.currentTime,
-    });
-  }
-}
