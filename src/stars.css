@@ -10,6 +10,7 @@
 	width: 100%;
 	overflow: hidden;
 	position: fixed;
+    z-index: -1;
 }
 
 .snow, .snow:before, .snow:after {

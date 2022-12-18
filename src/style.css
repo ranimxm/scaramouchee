@@ -1,14 +1,14 @@
-@import url(/src/stars.scss);
 * {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
-}
-.canvas-wrap {
-  background: url(https://dl.dropboxusercontent.com/u/3465596/stark-wolf.png) 125px 150px;
- }
+    text-decoration: none;
+    list-style-type: none;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
   
+}
+
 html {
   height: 100vh;
   background-image: url("/image/kkk.jpg");
@@ -25,13 +25,12 @@ html:after{
     bottom: 0;
     right: 0;
 }
-
-
 header{
   display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 0 80px;
+    margin: 1em;
 }
 header a{
   color: white;
