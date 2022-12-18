@@ -1,6 +1,15 @@
 self.addEventListener("install", e => {
-    console.log("install!");
-    });
+    e.waitUntil(
+        caches.open("statics").then(cache => {
+            return cache.addAll([
+                "./", 
+                "./src/style.css", 
+                "./image/sa.png",
+                "./songs",
+                "./images"
+            ]);
+        })
+     );
 
 //     self.addEventListener("fetch", e => {
 //     e.respondWith(
@@ -9,5 +18,7 @@ self.addEventListener("install", e => {
 //         })
 //       );
 // });
-//  self.addEventListener("fetch", e => {
-//   })
+  self.addEventListener("fetch", e => {
+    console.log(`Intercepting fetch request for: ${e.request.url}`);
+  });
+});
