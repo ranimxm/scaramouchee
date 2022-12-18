@@ -9,6 +9,7 @@
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="/image/sa.png">
     <link rel="shortcut icon" href="/image/sa.png" type="image/png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     
 </head>
 <body>
@@ -19,67 +20,41 @@
 
     <div class="parallax">
         <div class="text">
-            <p>Scaramouche simpies </p>
+            <p>Scaramouche simpies
+               </p>
         </div>
     </div>
-    <!-- <div class="container">
-        <div class="playlist-box">
-            <ul class="playlist">
-                <li class="track"><source src="/audio/(SPOILER)_Scaramouche_Boss_Battle-Theme_Phase_2_-(UNFINISHED)_Genshin_Impact.mp3">
-                    Scaramouche Boss Theme</li>
-                <li class="track">Scaramouche Boss Theme</li>
-                <li class="track">Scaramouche Boss Theme</li>
-            </ul>
-        </div>
+    <div class="wrapper">
 
-        <div class="player">
-            <audio controls autoplay muted>
-                <source src="/audio/(SPOILER)_Scaramouche_Boss_Battle-Theme_Phase_2_-(UNFINISHED)_Genshin_Impact.mp3" type="audio/ogg">
-   
-
-            <span class="play">▶</span>
-            <div class="duration">
-                <span class="time">0:00</span>
-                <span class="seek-bar">
-                    <span class="slider"></span>
-                </span>
-                <span class="max-time">0:00</span>
-            </div> -->
-        <!-- </div>
-    </div> -->
-    
-    <!-- <div class="wrapper">
-        <div class="top-bar">
-          <i class="material-icons">expand_more</i>
-          <span>Now Playing</span>
-          <i class="material-icons">more_horiz</i>
-        </div>
-        <div class="img-area">
-          <img src="" alt="">
-        </div>
-        <div class="song-details">
-          <p class="name"></p>
-          <p class="artist"></p>
-        </div>
-        <div class="progress-area">
-          <div class="progress-bar">
-            <audio id="main-audio" src=""></audio>
+      <div class="container">
+        <div class="box">
+          <div class="img-area">
+            <img src="" alt="">
           </div>
-          <div class="song-timer">
-            <span class="current-time">0:00</span>
-            <span class="max-duration">0:00</span>
+          <div class="song-details">
+            <p class="name"></p>
+            <p class="artist"></p>
+          </div>
+          <div class="progress-area">
+            <div class="progress-bar">
+              <audio id="main-audio" src=""></audio>
+            </div>
+            <div class="song-timer">
+              <span class="current-time">0:00</span>
+              <span class="max-duration">0:00</span>
+            </div>
+          </div>
+          <div class="controls">
+            <i id="repeat-plist" class="material-icons" title="Playlist looped">repeat</i>
+            <i id="prev" class="material-icons">skip_previous</i>
+            <div class="play-pause">
+              <i class="material-icons play">play_arrow</i>
+            </div>
+            <i id="next" class="material-icons">skip_next</i>
+            <i id="more-music" class="material-icons">queue_music</i>
           </div>
         </div>
-        <div class="controls">
-          <i id="repeat-plist" class="material-icons" title="Playlist looped">repeat</i>
-          <i id="prev" class="material-icons">skip_previous</i>
-          <div class="play-pause">
-            <i class="material-icons play">play_arrow</i>
-          </div>
-          <i id="next" class="material-icons">skip_next</i>
-          <i id="more-music" class="material-icons">queue_music</i>
-        </div>
-        <div class="music-list">
+        <div class="music-list show" id="list">
           <div class="header">
             <div class="row">
               <i class= "list material-icons">queue_music</i>
@@ -91,11 +66,13 @@
             <!-- here li list are coming from js -->
           </ul>
         </div>
-      </div> -->
+      </div>  
+    </div>
+  
     
     <script src="/src/index.js"></script>
-    <script src="/src/music.js"></script>
-    <script src="/src/app.js"></script>
+    <script src="/src/music-list.js"></script>
+    <script src="/src/script.js"></script>
 
     
 </body>
