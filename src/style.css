@@ -1,13 +1,31 @@
+@import url(/src/stars.scss);
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
 }
+.canvas-wrap {
+  background: url(https://dl.dropboxusercontent.com/u/3465596/stark-wolf.png) 125px 150px;
+ }
   
 html {
   height: 100vh;
+  background-image: url("/image/kkk.jpg");
+  background-size: 100% 200vh; 
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
 }
+html:after{
+  content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
 
 header{
   display: flex;
@@ -19,26 +37,15 @@ header a{
   color: white;
 }
 .parallax {
-  background-image: url("/image/kkk.jpg");
-  background-size: 100% 200vh; 
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
   display: flex;
   justify-content:center ;
   align-items: center;
   height: 100vh; 
+  transition: .3s ease-in-out;
   max-width: 100%;
   width: 100%;
 }
-.parallax:after{
-  content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-}
+
 .text{
   height: auto;
   padding: 1em;
@@ -49,7 +56,7 @@ header a{
 .container{
   height:auto;
   padding: 3em;
-  background-color:rgba(88, 22, 154, 0.816);
+  background-color:rgb(75, 39, 109);
   display: column;
   flex-direction: row;
   gap: 1em;
@@ -61,29 +68,53 @@ header a{
   gap: 1em;
 }
 .box{
-  height: auto;
-  padding: 1em;
-  width: 20rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  height: 15em;
+  max-width: 100%;
+  width: max-content;
   border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.57);
+  background-color: rgba(176, 175, 189, 0.87);
+  transition: .3s ease-in-out ;
+  overflow-y: hidden;
 
 }
+.box:hover{
+  height: 16em;
+  transition: .3s ease-in-out ;
+  opacity: .9;
+}
+.box img{
+  max-width: 100%;
+    width: 100%;
+    height: 75%;
+    max-height: 75%;
+}
+.box div{
+  padding: 1em;
+  color: white;
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #d1d1d1;; 
+  background:rgb(222, 223, 229); 
 }
  ::-webkit-scrollbar-thumb {
-  background: #888; 
+  background: rgba(87, 50, 50, 0.525); 
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+  background: rgba(68, 39, 39, 0.712); 
 }
 
 @media (max-width: 768px){
   html {
     background-size: 100% 100%; 
+  }
+  .container{
+    padding: 1em;
   }
 }
