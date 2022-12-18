@@ -7,11 +7,6 @@
   
 html {
   height: 100vh;
-  background-image: url("/image/kkk.jpg");
-  background-size: 100% 200vh; 
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
 }
 
 header{
@@ -24,6 +19,11 @@ header a{
   color: white;
 }
 .parallax {
+  background-image: url("/image/kkk.jpg");
+  background-size: 100% 200vh; 
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   justify-content:center ;
   align-items: center;
