@@ -1,5 +1,18 @@
+self.addEventListener("install", e => {
+  e.waitUntil(
+    caches.open("statics").then(cache => {
+        return cache.addAll([              
+            "./", 
+             "./src/style.css", 
+             "./image/sa.png",
+         ])
+        })
+      )
+    }); 
+
+
 const addResourcesToCache = async (resources) => {
-  const cache = await caches.open("v2");
+  const cache = await caches.open("statics");
   await cache.addAll(resources);
 };
 
