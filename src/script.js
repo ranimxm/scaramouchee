@@ -20,6 +20,7 @@ window.addEventListener("load", ()=>{
   playingSong(); 
 });
 
+
 function loadMusic(indexNumb){
   musicName.innerText = allMusic[indexNumb - 1].name;
   musicArtist.innerText = allMusic[indexNumb - 1].artist;
@@ -234,43 +235,48 @@ function clicked(element){
 }
 
 
-async function start(){
-  await mainAudio.play();
+if('mediaSession' in navigator) {
 
-  if ("mediaSession" in navigator) {
-    navigator.mediaSession.metadata = new MediaMetadata({
-      title: musicName,
-      artist: musicArtist,
-      artwork: [
-        { src: 'image/s.png',   sizes: '195x195',   type: 'image/png' },
-      ]
-    });
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: 'Shadows of Ourselves',
+    artist: 'Thievery Corporation',
+    album: 'The Mirror Conspiracy',
+    artwork: [
+      {
+        src: 'https://whatpwacando.today/src/img/media/mirror-conspiracy256x256.jpeg',
+        sizes: '256x256',
+        type: 'image/jpeg'
+      },
+      {
+        src: 'https://whatpwacando.today/src/img/media/mirror-conspiracy512x512.jpeg',
+        sizes: '512x512',
+        type: 'image/jpeg'
+      }
+    ]
+  });
 
-  } 
-};
-const actionHandlers = [
-  ['play',          () => {playMusic()}],
-  ['pause',         () => {pauseMusic()}],
-  ['previoustrack', () => { prevMusic() }],
-  ['nexttrack',     () => { nextMusic() }],
-];
+  navigator.mediaSession.setActionHandler('play', () => mainAudio.play());
+  navigator.mediaSession.setActionHandler('pause', () => mainAudio.pause());
+  navigator.mediaSession.setActionHandler('seekbackward', (details) => {
+    const skipTime = details.seekOffset || 1;
+    mainAudio.currentTime = Math.max(mainAudio.currentTime - skipTime, 0);
+  });
 
-for (const [action, handler] of actionHandlers) {
-  try {
-    navigator.mediaSession.setActionHandler(action, handler);
-  } catch (error) {
-    console.log(`The media session action "${action}" is not supported yet.`);
-  }
-}
+  navigator.mediaSession.setActionHandler('seekforward', (details) => {
+    const skipTime = details.seekOffset || 1;
+    mainAudio.currentTime = Math.min(mainAudio.currentTime + skipTime, mainAudio.duration);
+  });
 
-navigator.mediaSession.setActionHandler('play', async () => {
-  // Resume playback
-  await mainAudio.play();
-});
+  navigator.mediaSession.setActionHandler('seekto', (details) => {
+    if (details.fastSeek && 'fastSeek' in mainAudio) {
+      mainAudio.fastSeek(details.seekTime);
+      return;
+    }
+    mainAudio.currentTime = details.seekTime;
+  });
 
-navigator.mediaSession.setActionHandler('pause', () => {
-  // Pause active playback
-  mainAudio.pause();
-});
-
-
+  navigator.mediaSession.setActionHandler('previoustrack', () => {
+    mainAudio.currentTime = 0;
+  });
+}    
+    
