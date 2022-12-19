@@ -234,57 +234,53 @@ function clicked(element){
   playingSong();
 }
 
+playPauseBtn.addEventListener('pointerup', function(event) {
+  let audio = document.querySelector('#main-audio');
 
-if('mediaSession' in navigator) {
+  // User interacted with the page. Let's play audio...
+  audio.play()
+  .then(_ => { 
+    if('mediaSession' in navigator) {
 
-  navigator.mediaSession.metadata = new MediaMetadata({
-    title: 'Shadows of Ourselves',
-    artist: 'Thievery Corporation',
-    album: 'The Mirror Conspiracy',
-    artwork: [
-      {
-        src: 'https://whatpwacando.today/src/img/media/mirror-conspiracy256x256.jpeg',
-        sizes: '256x256',
-        type: 'image/jpeg'
-      }
-    ]
-  });
-
-  navigator.mediaSession.setActionHandler('play', () => mainAudio.play());
-  navigator.mediaSession.setActionHandler('pause', () => mainAudio.pause());
-  navigator.mediaSession.setActionHandler('seekbackward', (details) => {
-    const skipTime = details.seekOffset || 1;
-    mainAudio.currentTime = Math.max(mainAudio.currentTime - skipTime, 0);
-  });
-
-  navigator.mediaSession.setActionHandler('seekforward', (details) => {
-    const skipTime = details.seekOffset || 1;
-    mainAudio.currentTime = Math.min(mainAudio.currentTime + skipTime, mainAudio.duration);
-  });
-
-  navigator.mediaSession.setActionHandler('seekto', (details) => {
-    if (details.fastSeek && 'fastSeek' in mainAudio) {
-      mainAudio.fastSeek(details.seekTime);
-      return;
-    }
-    mainAudio.currentTime = details.seekTime;
-  });
-
-  navigator.mediaSession.setActionHandler('previoustrack', () => {
-    mainAudio.currentTime = 0;
-  });
-}    
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: 'Shadows of Ourselves',
+        artist: 'Thievery Corporation',
+        album: 'The Mirror Conspiracy',
+        artwork: [
+          {
+            src: 'https://whatpwacando.today/src/img/media/mirror-conspiracy256x256.jpeg',
+            sizes: '256x256',
+            type: 'image/jpeg'
+          }
+        ]
+      });
     
-function updatePositionState() {
-  if ('setPositionState' in navigator.mediaSession) {
-    navigator.mediaSession.setPositionState({
-      duration: mainAudio.duration,
-      playbackRate: mainAudio.playbackRate,
-      position: mainAudio.currentTime,
-    });
-  }
-}
+      navigator.mediaSession.setActionHandler('play', () => mainAudio.play());
+      navigator.mediaSession.setActionHandler('pause', () => mainAudio.pause());
+      navigator.mediaSession.setActionHandler('seekbackward', (details) => {
+        const skipTime = details.seekOffset || 1;
+        mainAudio.currentTime = Math.max(mainAudio.currentTime - skipTime, 0);
+      });
+    
+      navigator.mediaSession.setActionHandler('seekforward', (details) => {
+        const skipTime = details.seekOffset || 1;
+        mainAudio.currentTime = Math.min(mainAudio.currentTime + skipTime, mainAudio.duration);
+      });
+    
+      navigator.mediaSession.setActionHandler('seekto', (details) => {
+        if (details.fastSeek && 'fastSeek' in mainAudio) {
+          mainAudio.fastSeek(details.seekTime);
+          return;
+        }
+        mainAudio.currentTime = details.seekTime;
+      });
+    
+      navigator.mediaSession.setActionHandler('previoustrack', () => {
+        mainAudio.currentTime = 0;
+      });
+    }    
+    
+      })
+  .catch(error => { console.log(error) });
+});
 
-// When video starts playing, update duration.
-updatePositionState();
-navigator.mediaSession.setPositionState(null);
