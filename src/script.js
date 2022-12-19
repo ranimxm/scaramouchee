@@ -246,11 +246,6 @@ if('mediaSession' in navigator) {
         src: 'https://whatpwacando.today/src/img/media/mirror-conspiracy256x256.jpeg',
         sizes: '256x256',
         type: 'image/jpeg'
-      },
-      {
-        src: 'https://whatpwacando.today/src/img/media/mirror-conspiracy512x512.jpeg',
-        sizes: '512x512',
-        type: 'image/jpeg'
       }
     ]
   });
@@ -280,3 +275,16 @@ if('mediaSession' in navigator) {
   });
 }    
     
+function updatePositionState() {
+  if ('setPositionState' in navigator.mediaSession) {
+    navigator.mediaSession.setPositionState({
+      duration: mainAudio.duration,
+      playbackRate: mainAudio.playbackRate,
+      position: mainAudio.currentTime,
+    });
+  }
+}
+
+// When video starts playing, update duration.
+updatePositionState();
+navigator.mediaSession.setPositionState(null);
