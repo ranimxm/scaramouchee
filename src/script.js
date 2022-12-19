@@ -235,38 +235,65 @@ function clicked(element){
 }
 
 
-navigator.mediaSession.playbackState = "playing";
 
-if ('mediaSession' in navigator) {
+
+function setMediaSessionMetaData(mainAudio){
+  // Progressive enhancement of your PWA,
+  // which means we have to check if the
+  // new API is available.
+  if(!('mediaSession' in navigator)){
+    return;
+  }
+  
   navigator.mediaSession.metadata = new MediaMetadata({
-    title: 'Unforgettable',
-    artist: 'Nat King Cole',
-    album: 'The Ultimate Collection (Remastered)',
-    artwork: [
-      { src: 'https://dummyimage.com/96x96',   sizes: '96x96',   type: 'image/png' },
-      { src: 'https://dummyimage.com/128x128', sizes: '128x128', type: 'image/png' },
-      { src: 'https://dummyimage.com/192x192', sizes: '192x192', type: 'image/png' },
-      { src: 'https://dummyimage.com/256x256', sizes: '256x256', type: 'image/png' },
-      { src: 'https://dummyimage.com/384x384', sizes: '384x384', type: 'image/png' },
-      { src: 'https://dummyimage.com/512x512', sizes: '512x512', type: 'image/png' },
-    ]
+    title: mainAudio.title,
+    artist: mainAudio.artist,
+    artwork: mainAudio.artwork
   });
-  var player = mainAudio;
-
-  navigator.mediaSession.setActionHandler('seekforward', (details) => {
-    const skipTime = details.seekOffset || 1;
-    player.currentTime = Math.min(player.currentTime + skipTime, player.duration);
-  });
-
-  navigator.mediaSession.setActionHandler('seekto', (details) => {
-    if (details.fastSeek && 'fastSeek' in player) {
-      player.fastSeek(details.seekTime);
-      return;
+  
+  // Add action handlers, if any.
+  // For a complete list, check out the
+  // MDN-link in the addendum.
+  const actionHandlers = [
+    // play
+    [
+      'play',
+      async () => {
+        // play our audio
+        await playMusic();
+        // set playback state
+        navigator.mediaSession.playbackState = "playing";
+        // update our status element
+      }
+    ],
+    [
+      'pause',
+       () => {
+        // pause out audio
+        pauseMusic();        // set playback state
+        navigator.mediaSession.playbackState = "paused";
+        // update our status element
+      }
+    ],
+  ]
+  
+  for (const [action, handler] of actionHandlers) {
+    try {
+      navigator.mediaSession.setActionHandler(action, handler);
+    } catch (error) {
+      console.log(`The media session action "${action}" is not supported yet.`);
     }
-    player.currentTime = details.seekTime;
-  });
+  }
+  
+}
 
-  navigator.mediaSession.setActionHandler('previoustrack', () => {
-    player.currentTime = 0;
-  });
-} 
+
+setMediaSessionMetaData({
+  title: "Song name",
+  artist: "Artist name",
+  album: "Album name",
+  artwork: [{ 
+    src: 'https://dummyimage.com/512x512',
+    sizes: '512x512',
+    type: 'image/png' }]
+});
