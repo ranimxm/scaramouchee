@@ -64,7 +64,7 @@ function nextMusic(){
 
 // play or pause button event
 playPauseBtn.addEventListener("click", ()=>{
-  const isMusicPlay = wrapper.classList.contains("paused");
+  var isMusicPlay = wrapper.classList.contains("paused");
   //if isPlayMusic is true then call pauseMusic else call playMusic
   isMusicPlay ? pauseMusic() : playMusic();
   playingSong();
@@ -235,33 +235,23 @@ function clicked(element){
 }
 
 
-if('mediaSession' in navigator) {
-  const player = document.querySelector('audio');
+navigator.mediaSession.playbackState = "playing";
 
+if ('mediaSession' in navigator) {
   navigator.mediaSession.metadata = new MediaMetadata({
-    title: 'Shadows of Ourselves',
-    artist: 'Thievery Corporation',
-    album: 'The Mirror Conspiracy',
+    title: 'Unforgettable',
+    artist: 'Nat King Cole',
+    album: 'The Ultimate Collection (Remastered)',
     artwork: [
-      {
-        src: 'https://whatpwacando.today/src/img/media/mirror-conspiracy256x256.jpeg',
-        sizes: '256x256',
-        type: 'image/jpeg'
-      },
-      {
-        src: 'https://whatpwacando.today/src/img/media/mirror-conspiracy512x512.jpeg',
-        sizes: '512x512',
-        type: 'image/jpeg'
-      }
+      { src: 'https://dummyimage.com/96x96',   sizes: '96x96',   type: 'image/png' },
+      { src: 'https://dummyimage.com/128x128', sizes: '128x128', type: 'image/png' },
+      { src: 'https://dummyimage.com/192x192', sizes: '192x192', type: 'image/png' },
+      { src: 'https://dummyimage.com/256x256', sizes: '256x256', type: 'image/png' },
+      { src: 'https://dummyimage.com/384x384', sizes: '384x384', type: 'image/png' },
+      { src: 'https://dummyimage.com/512x512', sizes: '512x512', type: 'image/png' },
     ]
   });
-
-  navigator.mediaSession.setActionHandler('play', () => player.play());
-  navigator.mediaSession.setActionHandler('pause', () => player.pause());
-  navigator.mediaSession.setActionHandler('seekbackward', (details) => {
-    const skipTime = details.seekOffset || 1;
-    player.currentTime = Math.max(player.currentTime - skipTime, 0);
-  });
+  var player = mainAudio;
 
   navigator.mediaSession.setActionHandler('seekforward', (details) => {
     const skipTime = details.seekOffset || 1;
@@ -279,5 +269,4 @@ if('mediaSession' in navigator) {
   navigator.mediaSession.setActionHandler('previoustrack', () => {
     player.currentTime = 0;
   });
-}    
-    
+} 
