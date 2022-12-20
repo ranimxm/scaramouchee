@@ -60,30 +60,3 @@ self.addEventListener("install", e => {
  */
 `;
 
-const rollup = require('rollup');
-const hash = require('./plugins/hash').findHashes;
-const babel = require('rollup-plugin-babel');
-const entries = [
-  "./", 
-               "./src/style.css", 
-               "./image/sa.png",
-];
-
-let cache;
-entries.forEach(entry => {
-  rollup.rollup({
-    entry: `src/${entry}`,
-    cache,
-    plugins: [
-      hash(),
-      babel()
-    ]
-  }).then(bundle => {
-    cache = bundle;
-    bundle.write({
-      intro,
-      format: 'iife',
-      dest: `dist/${entry}`
-    });
-  });
-});
