@@ -41,62 +41,62 @@ self.addEventListener("install", e => {
          );
       });
 
-  //     function fetchHospitals() {
-  //       axios
-  //           .get('http://localhost:4000/hospitals')
-  //           .then((response) => {
-  //               const dbOpenRequest = indexedDB.open('hospitalDB', 1);
-  //               dbOpenRequest.onupgradeneeded = function (event) {
-  //                   const db = event.target.result;
-  //                   db.createObjectStore('hospitalStore', { keyPath: 'id' });
-  //               };
-  //               dbOpenRequest.onsuccess = function (event) {
-  //                   const db = event.target.result;
-  //                   const txn = db.transaction('hospitalStore', 'readwrite');
-  //                   const store = txn.objectStore('hospitalStore');
-  //                   const clearRequest = store.clear();
-  //                   clearRequest.onsuccess = function () {
-  //                       response.data.forEach((hospital) => {
-  //                           store.add(hospital);
-  //                       });
-  //                   };
-  //               };
-  //               setHospitals(response.data);
-  //           })
-  //           .catch(() => {
-  //               const dbOpenRequest = indexedDB.open('hospitalDB', 1);
-  //               dbOpenRequest.onsuccess = function (event) {
-  //                   const db = event.target.result;
-  //                   const txn = db.transaction('hospitalStore', 'readonly');
-  //                   const store = txn.objectStore('hospitalStore');
-  //                   const getAllRequest = store.getAll();
-  //                   getAllRequest.onsuccess = function () {
-  //                       setHospitals(getAllRequest.result);
-  //                   };
-  //               };
-  //           });
-  //   }
+      function fetchHospitals() {
+        axios
+            .get('http://localhost:4000/hospitals')
+            .then((response) => {
+                const dbOpenRequest = indexedDB.open('hospitalDB', 1);
+                dbOpenRequest.onupgradeneeded = function (event) {
+                    const db = event.target.result;
+                    db.createObjectStore('hospitalStore', { keyPath: 'id' });
+                };
+                dbOpenRequest.onsuccess = function (event) {
+                    const db = event.target.result;
+                    const txn = db.transaction('hospitalStore', 'readwrite');
+                    const store = txn.objectStore('hospitalStore');
+                    const clearRequest = store.clear();
+                    clearRequest.onsuccess = function () {
+                        response.data.forEach((hospital) => {
+                            store.add(hospital);
+                        });
+                    };
+                };
+                setHospitals(response.data);
+            })
+            .catch(() => {
+                const dbOpenRequest = indexedDB.open('hospitalDB', 1);
+                dbOpenRequest.onsuccess = function (event) {
+                    const db = event.target.result;
+                    const txn = db.transaction('hospitalStore', 'readonly');
+                    const store = txn.objectStore('hospitalStore');
+                    const getAllRequest = store.getAll();
+                    getAllRequest.onsuccess = function () {
+                        setHospitals(getAllRequest.result);
+                    };
+                };
+            });
+    }
 
-  //   function handleSubmit(e) {
-  //     e.preventDefault();
-  //     axios
-  //         .post(`http://localhost:4000/hospital/${activeId}`, hospitalData)
-  //         .then(() => {
-  //             setActiveId(null);
-  //             fetchHospitals();
-  //         })
-  //         .catch(() => {
-  //             // store the form data in indexedDB
-  //             // trigger a sync task
-  //             navigator.serviceWorker.ready(serviceWorkerRegistration => {
-  //                serviceWorkerRegistration.sync.register('some-unique-tag');
-  //             });
-  //         });
-  // }
-  // self.addEventListener('sync', event => {
-  //   if (event.tag === 'unique-tag-name') {
-  //     // retrieve data from indexedDB
-  //     // make the api call with the data
-  //   }
-  // });
+    function handleSubmit(e) {
+      e.preventDefault();
+      axios
+          .post(`http://localhost:4000/hospital/${activeId}`, hospitalData)
+          .then(() => {
+              setActiveId(null);
+              fetchHospitals();
+          })
+          .catch(() => {
+              // store the form data in indexedDB
+              // trigger a sync task
+              navigator.serviceWorker.ready(serviceWorkerRegistration => {
+                 serviceWorkerRegistration.sync.register('some-unique-tag');
+              });
+          });
+  }
+  self.addEventListener('sync', event => {
+    if (event.tag === 'unique-tag-name') {
+      // retrieve data from indexedDB
+      // make the api call with the data
+    }
+  });
   

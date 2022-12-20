@@ -232,69 +232,76 @@ function clicked(element){
   loadMusic(musicIndex);
   playMusic();
   playingSong();
-}
+};
+var audio = mainAudio;
 
-
-
-
-function setMediaSessionMetaData(mainAudio){
   // Progressive enhancement of your PWA,
   // which means we have to check if the
   // new API is available.
-  if(!('mediaSession' in navigator)){
-    return;
-  }
+  // if(!('mediaSession' in navigator)){
+  //   return;
+  // }
   
-  navigator.mediaSession.metadata = new MediaMetadata({
-    title: mainAudio.title,
-    artist: mainAudio.artist,
-    artwork: mainAudio.artwork
-  });
+  // navigator.mediaSession.metadata = new MediaMetadata({
+  //   title: 'Unforgettable',
+  //   artist: 'Nat King Cole',
+  //   album: 'The Ultimate Collection (Remastered)',
+  //   artwork: [
+  //     { src: 'https://dummyimage.com/96x96',   sizes: '96x96',   type: 'image/png' },
+  //     { src: 'https://dummyimage.com/128x128', sizes: '128x128', type: 'image/png' },
+  //     { src: 'https://dummyimage.com/192x192', sizes: '192x192', type: 'image/png' },
+  //     { src: 'https://dummyimage.com/256x256', sizes: '256x256', type: 'image/png' },
+  //     { src: 'https://dummyimage.com/384x384', sizes: '384x384', type: 'image/png' },
+  //     { src: 'https://dummyimage.com/512x512', sizes: '512x512', type: 'image/png' },
+  //   ]
+  //   // title: mainAudio.title,
+  //   // artist: mainAudio.artist,
+  //   // artwork: mainAudio.artwork
+  // });
   
-  // Add action handlers, if any.
-  // For a complete list, check out the
-  // MDN-link in the addendum.
-  const actionHandlers = [ 
-    // play
-    [
-      'play',
-      async () => {
-        // play our audio
-        await playMusic();
-        playingSong();
-        // set playback state
-        navigator.mediaSession.playbackState = "playing";
-        // update our status element
-      }
-    ],
-    [
-      'pause',
-       () => {
-        pauseMusic();
-        // pause out audio
-        playingSong();
-        navigator.mediaSession.playbackState = "paused";
-        // update our status element
-      }
-    ],
-  ]
+  // // Add action handlers, if any.
+  // // For a complete list, check out the
+  // // MDN-link in the addendum.
+  // const actionHandlers = [ 
+  //   // play
+  //   [
+  //     'play',
+  //     async () => {
+  //       // play our audio
+  //       await playMusic();
+  //       playingSong();
+  //       // set playback state
+  //       navigator.mediaSession.playbackState = "playing";
+  //       // update our status element
+  //     }
+  //   ],
+  //   [
+  //     'pause',
+  //      () => {
+  //       pauseMusic();
+  //       // pause out audio
+  //       playingSong();
+  //       navigator.mediaSession.playbackState = "paused";
+  //       // update our status element
+  //     }
+  //   ],
+  // ]
   
-  for (const [action, handler] of actionHandlers) {
-    try {
-      navigator.mediaSession.setActionHandler(action, handler);
-    } catch (error) {
-      console.log(`The media session action "${action}" is not supported yet.`);
-    }
-  }
+  // for (const [action, handler] of actionHandlers) {
+  //   try {
+  //     navigator.mediaSession.setActionHandler(action, handler);
+  //   } catch (error) {
+  //     console.log(`The media session action "${action}" is not supported yet.`);
+  //   }
+  // }
   
-}
 
 
-setMediaSessionMetaData({
-  title: "gg",
-  artist: "Artist name",
-  artwork: [{ 
-    src: 'https://dummyimage.com/512x512',
-    sizes: '512x512',
-    type: 'image/png' }]
-});
+// setMediaSessionMetaData({
+//   title: "gg",
+//   artist: "Artist name",
+//   artwork: [{ 
+//     src: 'https://dummyimage.com/512x512',
+//     sizes: '512x512',
+//     type: 'image/png' }]
+// });
