@@ -5,9 +5,9 @@ function chibi(){
 
   document.getElementById('before').className = 'classname';
 
-  if (before.getAttribute('src') == "/image/sss.png")
+  if (before.getAttribute('src') == "/image/sss.webp")
   {
-      before.src = "/image/ssa.png";  
+      before.src = "/image/ssa.webp";  
 
   
   // -> and re-adding the class
@@ -16,14 +16,8 @@ function chibi(){
   }
   else
   {
-      before.src = "/image/sss.png";
+      before.src = "/image/sss.webp";
       before.classList.remove("classname");
-  
-      // -> triggering reflow /* The actual magic */
-      // without this it wouldn't work. Try uncommenting the line and the transition won't be retriggered.
-      // Oops! This won't work in strict mode. Thanks Felis Phasma!
-      // element.offsetWidth = element.offsetWidth;
-      // Do this instead:
       void before.offsetWidth;
   }
 
@@ -55,7 +49,7 @@ window.addEventListener("load", ()=>{
 function loadMusic(indexNumb){
   musicName.innerText = allMusic[indexNumb - 1].name;
   musicArtist.innerText = allMusic[indexNumb - 1].artist;
-  musicImg.src = `image/${allMusic[indexNumb - 1].src}.png`;
+  musicImg.src = `image/${allMusic[indexNumb - 1].src}.webp`;
   mainAudio.src = `songs/${allMusic[indexNumb - 1].src}.mp3`;
 }
 
