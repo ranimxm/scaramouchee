@@ -1,3 +1,34 @@
+
+function chibi(){
+
+  var before = document.getElementById("before");
+
+  document.getElementById('before').className = 'classname';
+
+  if (before.getAttribute('src') == "/image/sss.png")
+  {
+      before.src = "/image/ssa.png";  
+
+  
+  // -> and re-adding the class
+  before.classList.add("classname");
+
+  }
+  else
+  {
+      before.src = "/image/sss.png";
+      before.classList.remove("classname");
+  
+      // -> triggering reflow /* The actual magic */
+      // without this it wouldn't work. Try uncommenting the line and the transition won't be retriggered.
+      // Oops! This won't work in strict mode. Thanks Felis Phasma!
+      // element.offsetWidth = element.offsetWidth;
+      // Do this instead:
+      void before.offsetWidth;
+  }
+
+
+}
 const wrapper = document.querySelector(".wrapper"),
 musicImg = wrapper.querySelector(".img-area img"),
 musicName = wrapper.querySelector(".song-details .name"),
