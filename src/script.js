@@ -254,13 +254,14 @@ function setMediaSessionMetaData(mainAudio){
   // Add action handlers, if any.
   // For a complete list, check out the
   // MDN-link in the addendum.
-  const actionHandlers = [
+  const actionHandlers = [ 
     // play
     [
       'play',
       async () => {
         // play our audio
         await playMusic();
+        playingSong();
         // set playback state
         navigator.mediaSession.playbackState = "playing";
         // update our status element
@@ -269,8 +270,9 @@ function setMediaSessionMetaData(mainAudio){
     [
       'pause',
        () => {
+        pauseMusic();
         // pause out audio
-        pauseMusic();        // set playback state
+        playingSong();
         navigator.mediaSession.playbackState = "paused";
         // update our status element
       }
@@ -289,9 +291,8 @@ function setMediaSessionMetaData(mainAudio){
 
 
 setMediaSessionMetaData({
-  title: "Song name",
+  title: "gg",
   artist: "Artist name",
-  album: "Album name",
   artwork: [{ 
     src: 'https://dummyimage.com/512x512',
     sizes: '512x512',

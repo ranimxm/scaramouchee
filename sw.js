@@ -1,3 +1,4 @@
+
 self.addEventListener("install", e => {
   e.waitUntil(
     caches.open("statics").then(cache => {
@@ -40,23 +41,62 @@ self.addEventListener("install", e => {
          );
       });
 
-      const intro = `/**
- *
- * Copyright 2017 Google Inc. All rights reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * Built: ${new Date()}
- */
-`;
+  //     function fetchHospitals() {
+  //       axios
+  //           .get('http://localhost:4000/hospitals')
+  //           .then((response) => {
+  //               const dbOpenRequest = indexedDB.open('hospitalDB', 1);
+  //               dbOpenRequest.onupgradeneeded = function (event) {
+  //                   const db = event.target.result;
+  //                   db.createObjectStore('hospitalStore', { keyPath: 'id' });
+  //               };
+  //               dbOpenRequest.onsuccess = function (event) {
+  //                   const db = event.target.result;
+  //                   const txn = db.transaction('hospitalStore', 'readwrite');
+  //                   const store = txn.objectStore('hospitalStore');
+  //                   const clearRequest = store.clear();
+  //                   clearRequest.onsuccess = function () {
+  //                       response.data.forEach((hospital) => {
+  //                           store.add(hospital);
+  //                       });
+  //                   };
+  //               };
+  //               setHospitals(response.data);
+  //           })
+  //           .catch(() => {
+  //               const dbOpenRequest = indexedDB.open('hospitalDB', 1);
+  //               dbOpenRequest.onsuccess = function (event) {
+  //                   const db = event.target.result;
+  //                   const txn = db.transaction('hospitalStore', 'readonly');
+  //                   const store = txn.objectStore('hospitalStore');
+  //                   const getAllRequest = store.getAll();
+  //                   getAllRequest.onsuccess = function () {
+  //                       setHospitals(getAllRequest.result);
+  //                   };
+  //               };
+  //           });
+  //   }
 
+  //   function handleSubmit(e) {
+  //     e.preventDefault();
+  //     axios
+  //         .post(`http://localhost:4000/hospital/${activeId}`, hospitalData)
+  //         .then(() => {
+  //             setActiveId(null);
+  //             fetchHospitals();
+  //         })
+  //         .catch(() => {
+  //             // store the form data in indexedDB
+  //             // trigger a sync task
+  //             navigator.serviceWorker.ready(serviceWorkerRegistration => {
+  //                serviceWorkerRegistration.sync.register('some-unique-tag');
+  //             });
+  //         });
+  // }
+  // self.addEventListener('sync', event => {
+  //   if (event.tag === 'unique-tag-name') {
+  //     // retrieve data from indexedDB
+  //     // make the api call with the data
+  //   }
+  // });
+  
