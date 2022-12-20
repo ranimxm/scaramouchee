@@ -233,6 +233,8 @@ function clicked(element){
   playMusic();
   playingSong();
 };
+
+
 var audio = mainAudio;
 
   // Progressive enhancement of your PWA,
