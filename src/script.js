@@ -269,16 +269,9 @@ function clicked(element){
   //  if(!('mediaSession' in navigator)){
   //    return;
   //  }
-var audioName = document.getElementsByClassName("name");
-var indexName = audioName.name;
   function media(){
-    if (!("Notification" in window)) {
-      alert("This browser does not support Desktop notifications");
-    }
-    if (Notification.permission === "granted") {
-      return;
-    }
 
+    if ('mediaSession' in navigator) {
       navigator.mediaSession.metadata = new MediaMetadata({
          title: 'ww',
          artist: 'Nat King Cole',
@@ -294,7 +287,7 @@ var indexName = audioName.name;
          // artist: mainAudio.artist,
          // artwork: mainAudio.artwork
        });
-      
+    };
 
        const actionHandlers = [ 
         //  play
@@ -336,8 +329,8 @@ var indexName = audioName.name;
         navigator.mediaSession.playbackState = 'playing';
       };
 
-      
-      }
+
+      };
     
   
 media();
