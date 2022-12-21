@@ -1,24 +1,29 @@
+var before = document.getElementById("before");
+var bah = new Audio("/songs/scaaa.mp3");
+var bleh = new Audio("/songs/tong.mp3");
 
 function chibi(){
-
-  var before = document.getElementById("before");
-
   document.getElementById('before').className = 'classname';
+
 
   if (before.getAttribute('src') == "/image/sss.webp")
   {
-      before.src = "/image/ssa.webp";  
-
-  
-  // -> and re-adding the class
-  before.classList.add("classname");
-
+    bah.play();
+    bleh.pause();
+    bleh.currentTime=0;
+    before.src = "/image/ssa.webp";  
+    before.classList.add("classname");
+ 
   }
   else
   {
-      before.src = "/image/sss.webp";
-      before.classList.remove("classname");
-      void before.offsetWidth;
+    bleh.play();
+    bah.pause();
+    bah.currentTime=0;
+    before.src = "/image/sss.webp";
+    before.classList.remove("classname");
+    void before.offsetWidth;
+    
   }
 
 
