@@ -269,12 +269,19 @@ function clicked(element){
   //  if(!('mediaSession' in navigator)){
   //    return;
   //  }
+var audioName = document.getElementsByClassName("name");
+var indexName = audioName.name;
   function media(){
-  
+    if (!("Notification" in window)) {
+      alert("This browser does not support Desktop notifications");
+    }
+    if (Notification.permission === "granted") {
+      return;
+    }
+
       navigator.mediaSession.metadata = new MediaMetadata({
-         title: 'Unforgettable',
+         title: 'ww',
          artist: 'Nat King Cole',
-         album: 'The Ultimate Collection (Remastered)',
          artwork: [
            { src: 'https://dummyimage.com/96x96',   sizes: '96x96',   type: 'image/png' },
            { src: 'https://dummyimage.com/128x128', sizes: '128x128', type: 'image/png' },
@@ -288,9 +295,7 @@ function clicked(element){
          // artwork: mainAudio.artwork
        });
       
-      // // Add action handlers, if any.
-      // // For a complete list, check out the
-      // // MDN-link in the addendum.
+
        const actionHandlers = [ 
         //  play
          [
@@ -330,6 +335,7 @@ function clicked(element){
       if ('mediaSession' in navigator) {
         navigator.mediaSession.playbackState = 'playing';
       };
+
       
       }
     
