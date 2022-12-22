@@ -168,17 +168,6 @@ let startX;
 
 progressBar.addEventListener("mousedown", (e) => {
   isDragging = true;
-  startX = e.clientX;
-  const progressWidth = progressArea.clientWidth; //getting width of progress bar
-  let clickedOffsetX = e.offsetX; //getting offset x value
-  let songDuration = mainAudio.duration; //getting song total duration
-
-
-  if (isFinite(clickedOffsetX) && isFinite(songDuration)) {
-    mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
-    playMusic(); 
-    playingSong();
-  }
 });
 
 document.addEventListener("mousemove", (e) => {
