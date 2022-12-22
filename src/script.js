@@ -343,7 +343,10 @@ function clicked(element){
       if ('mediaSession' in navigator) {
         navigator.mediaSession.playbackState = 'playing';
       };
-     
+      navigator.mediaSession.setActionHandler('seekto', null);
+      navigator.mediaSession.setActionHandler('seekbackward', null);
+      navigator.mediaSession.setActionHandler('seekforward', null);
+
 
 
 
