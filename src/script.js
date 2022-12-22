@@ -200,27 +200,6 @@ progressArea.addEventListener("click", (e)=>{
   playingSong();
 });
 
-// handle touchstart event
-progressBar.addEventListener("touchstart", (e) => {
-  isDragging = true;
-});
-
-// handle touchmove event
-document.addEventListener("touchmove", (e) => {
-  const progressWidth = progressArea.clientWidth; //getting width of progress bar
-  let clickedOffsetX = e.offsetX; //getting offset x value
-  let songDuration = mainAudio.duration; //getting song total duration
-  
-  mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
-  playMusic(); 
-  playingSong();
-  
-});
-
-// handle touchend event
-document.addEventListener("touchend", () => {
-  isDragging = false;
-});
 
 
 
