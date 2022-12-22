@@ -164,7 +164,6 @@ mainAudio.addEventListener("timeupdate", (e)=>{
 
 let isDragging = false;
 // initialize variables for mouse input
-let startX;
 
 progressBar.addEventListener("mousedown", (e) => {
   isDragging = true;
@@ -180,7 +179,7 @@ document.addEventListener("mousemove", (e) => {
       playMusic(); 
       playingSong();
     }
-  }  // Check if clickedOffsetX and songDuration are finite
+  } 
  
 });
 
@@ -199,11 +198,6 @@ progressArea.addEventListener("click", (e)=>{
   playMusic(); 
   playingSong();
 });
-
-
-
-
-
 
 //change loop, shuffle, repeat icon onclick
 const repeatBtn = wrapper.querySelector("#repeat-plist");
