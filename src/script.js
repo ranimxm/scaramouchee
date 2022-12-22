@@ -203,26 +203,18 @@ progressArea.addEventListener("click", (e)=>{
 // handle touchstart event
 progressBar.addEventListener("touchstart", (e) => {
   isDragging = true;
-  startX = e.touches[0].clientX;
 });
 
 // handle touchmove event
 document.addEventListener("touchmove", (e) => {
-  if (isDragging) {
-    // get the current x position of the touch
-    const currentX = e.touches[0].clientX;
-    // get the width of the progress bar
-    const progressWidth = progressArea.clientWidth;
-    // calculate the percentage of the progress bar that has been dragged
-    const progress = (currentX - startX) / progressWidth;
-    // update the current time of the audio based on the progress
-    const currentTime = mainAudio.duration * progress;
-    if (isFinite(currentTime) && isFinite(mainAudio.duration)) {
-      mainAudio.currentTime = currentTime;
-      playMusic(); 
-      playingSong();
-    }
-  }
+  const progressWidth = progressArea.clientWidth; //getting width of progress bar
+  let clickedOffsetX = e.offsetX; //getting offset x value
+  let songDuration = mainAudio.duration; //getting song total duration
+  
+  mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
+  playMusic(); 
+  playingSong();
+  
 });
 
 // handle touchend event
