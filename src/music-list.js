@@ -4,7 +4,7 @@ let allMusic = [
     name: "Scaramouche Boss Theme Phase 2",
     artist: "Kekqasli",
     artwork: [
-      { src: 'image/music-one.png', sizes: '512x512', type: 'image/png' },
+      { src: 'image/music-1.png', sizes: '512x512', type: 'image/png' },
     ],
     src: "music-1"
   },

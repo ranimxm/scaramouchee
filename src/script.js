@@ -1,3 +1,7 @@
+navigator.mediaSession.metadata = new MediaMetadata();
+
+
+
 var before = document.getElementById("before");
 var bah = new Audio("/songs/scaaa.mp3");
 var bleh = new Audio("/songs/tong.mp3");
@@ -24,7 +28,7 @@ function chibi(){
     void before.offsetWidth;
     
   }
-}
+};
 const wrapper = document.querySelector(".wrapper"),
 musicImg = wrapper.querySelector(".img-area img"),
 musicName = wrapper.querySelector(".song-details .name"),
@@ -42,32 +46,53 @@ closemoreMusic = musicList.querySelector("#close");
 let musicIndex = Math.floor((Math.random() * allMusic.length) + 1);
 isMusicPaused = true;
 
-window.addEventListener("load", ()=>{
+window.addEventListener("load", () => {
   loadMusic(musicIndex);
-  playingSong(); 
+  playingSong();
+  setMediaMetadata();
 });
-
 
 function loadMusic(indexNumb){
   musicName.innerText = allMusic[indexNumb - 1].name;
   musicArtist.innerText = allMusic[indexNumb - 1].artist;
   musicImg.src = `image/${allMusic[indexNumb - 1].src}.webp`;
   mainAudio.src = `songs/${allMusic[indexNumb - 1].src}.mp3`;
-}
+  setMediaMetadata();
+};
+
+function setMediaMetadata() {
+  if ('mediaSession' in navigator) {
+    // console.log("it works!")
+    navigator.mediaSession.metadata.title = allMusic[musicIndex - 1].name;
+    navigator.mediaSession.metadata.artist = allMusic[musicIndex - 1].artist;
+    navigator.mediaSession.metadata.artwork = [{ src: `image/${allMusic[musicIndex - 1].src}.png` }];
+    } else{
+      console.log("it doesnt work");
+    };
+    navigator.mediaSession.setActionHandler('play', playMusic);
+    navigator.mediaSession.setActionHandler('pause', pauseMusic);
+    navigator.mediaSession.setActionHandler('previoustrack', prevMusic);
+    navigator.mediaSession.setActionHandler('nexttrack', nextMusic);
+};
+
+
+// navigator.mediaSession.metadata.artwork = [  { src: 'image/logo2.png', sizes: '48x48' },  { src: 'image/logo1.png', sizes: '96x96' }];
+
+
 
 //play music function
 function playMusic(){
   wrapper.classList.add("paused");
   playPauseBtn.querySelector("i").innerText = "pause";
-  mainAudio.play();
-}
+  mainAudio.play();  
+};
 
 //pause music function
 function pauseMusic(){
   wrapper.classList.remove("paused");
   playPauseBtn.querySelector("i").innerText = "play_arrow";
   mainAudio.pause();
-}
+};
 
 //prev music function
 function prevMusic(){
@@ -76,7 +101,8 @@ function prevMusic(){
   loadMusic(musicIndex);
   playMusic();
   playingSong(); 
-}
+  setMediaMetadata();
+};
 
 //next music function
 function nextMusic(){
@@ -85,7 +111,8 @@ function nextMusic(){
   loadMusic(musicIndex);
   playMusic();
   playingSong(); 
-}
+  setMediaMetadata();
+};
 
 // play or pause button event
 playPauseBtn.addEventListener("click", ()=>{
@@ -132,9 +159,36 @@ mainAudio.addEventListener("timeupdate", (e)=>{
   musicCurrentTime.innerText = `${currentMin}:${currentSec}`;
 });
 
+
+
+let isDragging = false;
+
+progressBar.addEventListener("mousedown", () => {
+  isDragging = true;
+});
+
+document.addEventListener("mousemove", (e) => {
+  if (isDragging) {
+    const progressWidth = progressArea.clientWidth; //getting width of progress bar
+    let clickedOffsetX = e.offsetX; //getting offset x value
+    let songDuration = mainAudio.duration; //getting song total duration
+    if (isFinite(clickedOffsetX) && isFinite(songDuration)) {
+      mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
+      playMusic(); 
+      playingSong();
+    }
+  }  // Check if clickedOffsetX and songDuration are finite
+ 
+});
+
+
+document.addEventListener("mouseup", () => {
+  isDragging = false;
+});
+
 // update playing song currentTime on according to the progress bar width
 progressArea.addEventListener("click", (e)=>{
-  let progressWidth = progressArea.clientWidth; //getting width of progress bar
+  const progressWidth = progressArea.clientWidth; //getting width of progress bar
   let clickedOffsetX = e.offsetX; //getting offset x value
   let songDuration = mainAudio.duration; //getting song total duration
   
@@ -260,103 +314,95 @@ function clicked(element){
   //  if(!('mediaSession' in navigator)){
   //    return;
   //  }
-  let plat = pp();
-  let indexNumb = 0;
+  // let plat = pp();
+  // let indexNumb = 0;
 
-  function pp(){
-    return allMusic;
-  };
+  // function pp(){
+  //   return allMusic;
+  // };
 
-  let audio = mainAudio;
+  // let audio = mainAudio;
 
-  function updatePositionState() {
-    navigator.mediaSession.setPositionState({
-      duration: mainAudio.duration,
-      playbackRate: mainAudio.playbackRate,
-      position: mainAudio.currentTime
-    });
-  }
-  function media(){
-    if ('mediaSession' in navigator) {
-      let track = plat[indexNumb];
+  // function updatePositionState() {
+  //   navigator.mediaSession.setPositionState({
+  //     duration: mainAudio.duration,
+  //     playbackRate: mainAudio.playbackRate,
+  //     position: mainAudio.currentTime
+  //   });
+  // }
+  // function media(){
+  //   if ('mediaSession' in navigator) {
+  //     let track = plat[indexNumb];
 
-      navigator.mediaSession.metadata = new MediaMetadata({
-         title: track.name,
-         artist: track.artist,
-         artwork: track.artwork
-         // title: mainAudio.title,
-         // artist: mainAudio.artist,
-         // artwork: mainAudio.artwork
-       });
-       //update the played song here
-    };
+  //     navigator.mediaSession.metadata = new MediaMetadata({
+  //        title: track.name,
+  //        artist: track.artist,
+  //        artwork: track.artwork
+  //        // title: mainAudio.title,
+  //        // artist: mainAudio.artist,
+  //        // artwork: mainAudio.artwork
+  //      });
+  //      //update the played song here
+  //   };
 
-       const actionHandlers = [ 
-        //  play
-         [
-           'play',
-           async () => {
-          // play our audio
-             await playMusic();
-             playingSong();
-             // set playback state
-             navigator.mediaSession.playbackState = "playing";
-             // update our status element
-           }
-         ],
-         [
-           'pause',
-            () => {
-             pauseMusic();
-             // pause out audio
-             playingSong();
-             navigator.mediaSession.playbackState = "paused";
-           }
-         ],
-         [
-          'previoustrack',
-         () =>{
-          prevMusic();
+  //      const actionHandlers = [ 
+  //       //  play
+  //        [
+  //          'play',
+  //          async () => {
+  //         // play our audio
+  //            await playMusic();
+  //            playingSong();
+  //            // set playback state
+  //            navigator.mediaSession.playbackState = "playing";
+  //            // update our status element
+  //          }
+  //        ],
+  //        [
+  //          'pause',
+  //           () => {
+  //            pauseMusic();
+  //            // pause out audio
+  //            playingSong();
+  //            navigator.mediaSession.playbackState = "paused";
+  //          }
+  //        ],
+  //        [
+  //         'previoustrack',
+  //        () =>{
+  //         prevMusic();
 
-         }
-         ],
-         [
-          'nexttrack',
-          () =>{
-            nextMusic();
-          }
-         ]
+  //        }
+  //        ],
+  //        [
+  //         'nexttrack',
+  //         () =>{
+  //           nextMusic();
+  //         }
+  //        ]
          
-       ]
+  //      ]
       
-       for (const [action, handler] of actionHandlers) {
-         try {
-           navigator.mediaSession.setActionHandler(action, handler);
-         } catch (error) {
-           console.log(`The media session action "${action}" is not supported yet.`);
-         }
-       }
+  //      for (const [action, handler] of actionHandlers) {
+  //        try {
+  //          navigator.mediaSession.setActionHandler(action, handler);
+  //        } catch (error) {
+  //          console.log(`The media session action "${action}" is not supported yet.`);
+  //        }
+  //      }
     
-       if ('mediaSession' in navigator) {
-        navigator.mediaSession.playbackState = 'paused';
-      };
-      if ('mediaSession' in navigator) {
-        navigator.mediaSession.playbackState = 'playing';
-      };
-      navigator.mediaSession.setActionHandler('seekto', null);
-      navigator.mediaSession.setActionHandler('seekbackward', null);
-      navigator.mediaSession.setActionHandler('seekforward', null);
+  //      if ('mediaSession' in navigator) {
+  //       navigator.mediaSession.playbackState = 'paused';
+  //     };
+  //     if ('mediaSession' in navigator) {
+  //       navigator.mediaSession.playbackState = 'playing';
+  //     };
+  //     navigator.mediaSession.setActionHandler('seekto', null);
+  //     navigator.mediaSession.setActionHandler('seekbackward', null);
+  //     navigator.mediaSession.setActionHandler('seekforward', null);
 
 
 
 
-      };
-    media();
-// setMediaSessionMetaData({
-//   title: "gg",
-//   artist: "Artist name",
-//   artwork: [{ 
-//     src: 'https://dummyimage.com/512x512',
-//     sizes: '512x512',
-//     type: 'image/png' }]
-// });
+  //     };
+  //   media();
