@@ -178,9 +178,7 @@ document.addEventListener("mousemove", (e) => {
       playingSong();
     }
   }  // Check if clickedOffsetX and songDuration are finite
- 
 });
-
 
 document.addEventListener("mouseup", () => {
   isDragging = false;
@@ -190,6 +188,33 @@ document.addEventListener("mouseup", () => {
 progressArea.addEventListener("click", (e)=>{
   const progressWidth = progressArea.clientWidth; //getting width of progress bar
   let clickedOffsetX = e.offsetX; //getting offset x value
+  let songDuration = mainAudio.duration; //getting song total duration
+  
+  mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
+  playMusic(); 
+  playingSong();
+});
+
+progressBar.addEventListener("touchstart", () => {
+  isDragging = true;
+});
+
+document.addEventListener("touchmove", (e) => {
+  if (isDragging) {
+    const progressBarRect = progressBar.getBoundingClientRect();
+    const progress = (e.touches[0].clientX - progressBarRect.left) / progressBarRect.width;
+    mainAudio.currentTime = progress * mainAudio.duration;
+  }
+});
+
+document.addEventListener("touchend", () => {
+  isDragging = false;
+});
+
+// update playing song currentTime on according to the progress bar width
+progressArea.addEventListener("touchstart", (e)=>{
+  let progressWidth = progressArea.clientWidth; //getting width of progress bar
+  let clickedOffsetX = e.touches[0].offsetX; //getting offset x value
   let songDuration = mainAudio.duration; //getting song total duration
   
   mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
