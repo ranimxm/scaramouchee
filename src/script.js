@@ -180,47 +180,36 @@ document.addEventListener("mousemove", (e) => {
   }  // Check if clickedOffsetX and songDuration are finite
 });
 
-document.addEventListener("mouseup", () => {
-  isDragging = false;
-});
+// initialize variables
+let startX;
 
-// update playing song currentTime on according to the progress bar width
-progressArea.addEventListener("click", (e)=>{
-  const progressWidth = progressArea.clientWidth; //getting width of progress bar
-  let clickedOffsetX = e.offsetX; //getting offset x value
-  let songDuration = mainAudio.duration; //getting song total duration
-  
-  mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
-  playMusic(); 
-  playingSong();
-});
-
-progressBar.addEventListener("touchstart", () => {
+// handle touchstart event
+progressBar.addEventListener("touchstart", (e) => {
   isDragging = true;
+  startX = e.touches[0].clientX;
 });
 
+// handle touchmove event
 document.addEventListener("touchmove", (e) => {
   if (isDragging) {
-    const progressBarRect = progressBar.getBoundingClientRect();
-    const progress = (e.touches[0].clientX - progressBarRect.left) / progressBarRect.width;
-    mainAudio.currentTime = progress * mainAudio.duration;
+    // get the current x position of the touch
+    const currentX = e.touches[0].clientX;
+    // get the width of the progress bar
+    const progressWidth = progressArea.clientWidth;
+    // calculate the percentage of the progress bar that has been dragged
+    const progress = (currentX - startX) / progressWidth;
+    // update the current time of the audio based on the progress
+    mainAudio.currentTime = mainAudio.duration * progress;
   }
 });
 
+// handle touchend event
 document.addEventListener("touchend", () => {
   isDragging = false;
 });
 
-// update playing song currentTime on according to the progress bar width
-progressArea.addEventListener("touchstart", (e)=>{
-  let progressWidth = progressArea.clientWidth; //getting width of progress bar
-  let clickedOffsetX = e.touches[0].offsetX; //getting offset x value
-  let songDuration = mainAudio.duration; //getting song total duration
-  
-  mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
-  playMusic(); 
-  playingSong();
-});
+
+
 
 //change loop, shuffle, repeat icon onclick
 const repeatBtn = wrapper.querySelector("#repeat-plist");
