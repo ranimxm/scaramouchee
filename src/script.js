@@ -71,8 +71,7 @@ function pauseMusic(){
 
 //prev music function
 function prevMusic(){
-  musicIndex--; //decrement of musicIndex by 1
-  //if musicIndex is less than 1 then musicIndex will be the array length so the last music play
+  musicIndex--; 
   musicIndex < 1 ? musicIndex = allMusic.length : musicIndex = musicIndex;
   loadMusic(musicIndex);
   playMusic();
@@ -81,8 +80,7 @@ function prevMusic(){
 
 //next music function
 function nextMusic(){
-  musicIndex++; //increment of musicIndex by 1
-  //if musicIndex is greater than array length then musicIndex will be 1 so the first music play
+  musicIndex++; 
   musicIndex > allMusic.length ? musicIndex = 1 : musicIndex = musicIndex;
   loadMusic(musicIndex);
   playMusic();
@@ -92,7 +90,6 @@ function nextMusic(){
 // play or pause button event
 playPauseBtn.addEventListener("click", ()=>{
   var isMusicPlay = wrapper.classList.contains("paused");
-  //if isPlayMusic is true then call pauseMusic else call playMusic
   isMusicPlay ? pauseMusic() : playMusic();
   playingSong();
 });
@@ -109,8 +106,8 @@ nextBtn.addEventListener("click", ()=>{
 
 // update progress bar width according to music current time
 mainAudio.addEventListener("timeupdate", (e)=>{
-  const currentTime = e.target.currentTime; //getting playing song currentTime
-  const duration = e.target.duration; //getting playing song total duration
+  const currentTime = e.target.currentTime; 
+  const duration = e.target.duration; 
   let progressWidth = (currentTime / duration) * 100;
   progressBar.style.width = `${progressWidth}%`;
 
@@ -121,7 +118,7 @@ mainAudio.addEventListener("timeupdate", (e)=>{
     let mainAdDuration = mainAudio.duration;
     let totalMin = Math.floor(mainAdDuration / 60);
     let totalSec = Math.floor(mainAdDuration % 60);
-    if(totalSec < 10){ //if sec is less than 10 then add 0 before it
+    if(totalSec < 10){ 
       totalSec = `0${totalSec}`;
     }
     musicDuartion.innerText = `${totalMin}:${totalSec}`;
@@ -129,7 +126,7 @@ mainAudio.addEventListener("timeupdate", (e)=>{
   // update playing song current time
   let currentMin = Math.floor(currentTime / 60);
   let currentSec = Math.floor(currentTime % 60);
-  if(currentSec < 10){ //if sec is less than 10 then add 0 before it
+  if(currentSec < 10){ 
     currentSec = `0${currentSec}`;
   }
   musicCurrentTime.innerText = `${currentMin}:${currentSec}`;
@@ -142,14 +139,14 @@ progressArea.addEventListener("click", (e)=>{
   let songDuration = mainAudio.duration; //getting song total duration
   
   mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
-  playMusic(); //calling playMusic function
+  playMusic(); 
   playingSong();
 });
 
 //change loop, shuffle, repeat icon onclick
 const repeatBtn = wrapper.querySelector("#repeat-plist");
 repeatBtn.addEventListener("click", ()=>{
-  let getText = repeatBtn.innerText; //getting this tag innerText
+  let getText = repeatBtn.innerText; 
   switch(getText){
     case "repeat":
       repeatBtn.innerText = "repeat_one";
@@ -168,17 +165,15 @@ repeatBtn.addEventListener("click", ()=>{
 
 //code for what to do after song ended
 mainAudio.addEventListener("ended", ()=>{
-  // we'll do according to the icon means if user has set icon to
-  // loop song then we'll repeat the current song and will do accordingly
-  let getText = repeatBtn.innerText; //getting this tag innerText
+  let getText = repeatBtn.innerText; 
   switch(getText){
     case "repeat":
       nextMusic(); //calling nextMusic function
       break;
     case "repeat_one":
       mainAudio.currentTime = 0; //setting audio current time to 0
-      loadMusic(musicIndex); //calling loadMusic function with argument, in the argument there is a index of current song
-      playMusic(); //calling playMusic function
+      loadMusic(musicIndex);
+      playMusic();
       break;
     case "shuffle":
       let randIndex = Math.floor((Math.random() * allMusic.length) + 1); //genereting random index/numb with max range of array length
@@ -204,7 +199,6 @@ closemoreMusic.addEventListener("click", ()=>{
 const ulTag = wrapper.querySelector("ul");
 // let create li tags according to array length for list
 for (let i = 0; i < allMusic.length; i++) {
-  //let's pass the song name, artist from the array
   let liTag = `<li li-index="${i + 1}">
                 <div class="row">
                   <span>${allMusic[i].name}</span>
@@ -213,7 +207,7 @@ for (let i = 0; i < allMusic.length; i++) {
                 <span id="${allMusic[i].src}" class="audio-duration">3:40</span>
                 <audio class="${allMusic[i].src}" src="songs/${allMusic[i].src}.mp3"></audio>
               </li>`;
-  ulTag.insertAdjacentHTML("beforeend", liTag); //inserting the li inside ul tag
+  ulTag.insertAdjacentHTML("beforeend", liTag); 
 
   let liAudioDuartionTag = ulTag.querySelector(`#${allMusic[i].src}`);
   let liAudioTag = ulTag.querySelector(`.${allMusic[i].src}`);
@@ -221,7 +215,7 @@ for (let i = 0; i < allMusic.length; i++) {
     let duration = liAudioTag.duration;
     let totalMin = Math.floor(duration / 60);
     let totalSec = Math.floor(duration % 60);
-    if(totalSec < 10){ //if sec is less than 10 then add 0 before it
+    if(totalSec < 10){
       totalSec = `0${totalSec}`;
     };
     liAudioDuartionTag.innerText = `${totalMin}:${totalSec}`; //passing total duation of song
@@ -242,7 +236,6 @@ function playingSong(){
       audioTag.innerText = adDuration;
     }
 
-    //if the li tag index is equal to the musicIndex then add playing class in it
     if(allLiTag[j].getAttribute("li-index") == musicIndex){
       allLiTag[j].classList.add("playing");
       audioTag.innerText = "Playing";
@@ -263,30 +256,39 @@ function clicked(element){
 
 
 
-  // Progressive enhancement of your PWA,
-  // which means we have to check if the
-  // new API is available.
+
   //  if(!('mediaSession' in navigator)){
   //    return;
   //  }
-  function media(){
+  let plat = pp();
+  let indexNumb = 0;
 
+  function pp(){
+    return allMusic;
+  };
+
+  let audio = mainAudio;
+
+  function updatePositionState() {
+    navigator.mediaSession.setPositionState({
+      duration: mainAudio.duration,
+      playbackRate: mainAudio.playbackRate,
+      position: mainAudio.currentTime
+    });
+  }
+  function media(){
     if ('mediaSession' in navigator) {
+      let track = plat[indexNumb];
+
       navigator.mediaSession.metadata = new MediaMetadata({
-         title: 'ww',
-         artist: 'Nat King Cole',
-         artwork: [
-           { src: 'https://dummyimage.com/96x96',   sizes: '96x96',   type: 'image/png' },
-           { src: 'https://dummyimage.com/128x128', sizes: '128x128', type: 'image/png' },
-           { src: 'https://dummyimage.com/192x192', sizes: '192x192', type: 'image/png' },
-           { src: 'https://dummyimage.com/256x256', sizes: '256x256', type: 'image/png' },
-           { src: 'https://dummyimage.com/384x384', sizes: '384x384', type: 'image/png' },
-           { src: 'https://dummyimage.com/512x512', sizes: '512x512', type: 'image/png' },
-         ]
+         title: track.name,
+         artist: track.artist,
+         artwork: track.artwork
          // title: mainAudio.title,
          // artist: mainAudio.artist,
          // artwork: mainAudio.artwork
        });
+       //update the played song here
     };
 
        const actionHandlers = [ 
@@ -309,9 +311,22 @@ function clicked(element){
              // pause out audio
              playingSong();
              navigator.mediaSession.playbackState = "paused";
-             // update our status element
            }
          ],
+         [
+          'previoustrack',
+         () =>{
+          prevMusic();
+
+         }
+         ],
+         [
+          'nexttrack',
+          () =>{
+            nextMusic();
+          }
+         ]
+         
        ]
       
        for (const [action, handler] of actionHandlers) {
@@ -328,12 +343,12 @@ function clicked(element){
       if ('mediaSession' in navigator) {
         navigator.mediaSession.playbackState = 'playing';
       };
+     
+
 
 
       };
-    
-  
-media();
+    media();
 // setMediaSessionMetaData({
 //   title: "gg",
 //   artist: "Artist name",
