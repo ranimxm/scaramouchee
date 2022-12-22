@@ -66,6 +66,7 @@ function setMediaMetadata() {
     navigator.mediaSession.metadata.title = allMusic[musicIndex - 1].name;
     navigator.mediaSession.metadata.artist = allMusic[musicIndex - 1].artist;
     navigator.mediaSession.metadata.artwork = [{ src: `image/${allMusic[musicIndex - 1].src}.png` }];
+    // navigator.mediaSession.metadata.shortcutIcon = [  { src: 'image/logo2.png', sizes: '48x48' },  { src: 'image/logo1.png', sizes: '96x96' }];
     } else{
       console.log("it doesnt work");
     };
@@ -162,9 +163,22 @@ mainAudio.addEventListener("timeupdate", (e)=>{
 
 
 let isDragging = false;
+// initialize variables for mouse input
+let startX;
 
-progressBar.addEventListener("mousedown", () => {
+progressBar.addEventListener("mousedown", (e) => {
   isDragging = true;
+  startX = e.clientX;
+  const progressWidth = progressArea.clientWidth; //getting width of progress bar
+  let clickedOffsetX = e.offsetX; //getting offset x value
+  let songDuration = mainAudio.duration; //getting song total duration
+
+
+  if (isFinite(clickedOffsetX) && isFinite(songDuration)) {
+    mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
+    playMusic(); 
+    playingSong();
+  }
 });
 
 document.addEventListener("mousemove", (e) => {
@@ -178,10 +192,24 @@ document.addEventListener("mousemove", (e) => {
       playingSong();
     }
   }  // Check if clickedOffsetX and songDuration are finite
+ 
 });
 
-// initialize variables
-let startX;
+
+document.addEventListener("mouseup", () => {
+  isDragging = false;
+});
+
+// update playing song currentTime on according to the progress bar width
+progressArea.addEventListener("click", (e)=>{
+  const progressWidth = progressArea.clientWidth; //getting width of progress bar
+  let clickedOffsetX = e.offsetX; //getting offset x value
+  let songDuration = mainAudio.duration; //getting song total duration
+  
+  mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
+  playMusic(); 
+  playingSong();
+});
 
 // handle touchstart event
 progressBar.addEventListener("touchstart", (e) => {
@@ -199,7 +227,12 @@ document.addEventListener("touchmove", (e) => {
     // calculate the percentage of the progress bar that has been dragged
     const progress = (currentX - startX) / progressWidth;
     // update the current time of the audio based on the progress
-    mainAudio.currentTime = mainAudio.duration * progress;
+    const currentTime = mainAudio.duration * progress;
+    if (isFinite(currentTime) && isFinite(mainAudio.duration)) {
+      mainAudio.currentTime = currentTime;
+      playMusic(); 
+      playingSong();
+    }
   }
 });
 
@@ -207,6 +240,7 @@ document.addEventListener("touchmove", (e) => {
 document.addEventListener("touchend", () => {
   isDragging = false;
 });
+
 
 
 
