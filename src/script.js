@@ -1,7 +1,5 @@
 navigator.mediaSession.metadata = new MediaMetadata();
 
-
-
 var before = document.getElementById("before");
 var bah = new Audio("/songs/scaaa.mp3");
 var bleh = new Audio("/songs/tong.mp3");
@@ -76,10 +74,7 @@ function setMediaMetadata() {
     navigator.mediaSession.setActionHandler('nexttrack', nextMusic);
 };
 
-
 // navigator.mediaSession.metadata.artwork = [  { src: 'image/logo2.png', sizes: '48x48' },  { src: 'image/logo1.png', sizes: '96x96' }];
-
-
 
 //play music function
 function playMusic(){
@@ -142,7 +137,6 @@ mainAudio.addEventListener("timeupdate", (e)=>{
   let musicCurrentTime = wrapper.querySelector(".current-time"),
   musicDuartion = wrapper.querySelector(".max-duration");
   mainAudio.addEventListener("loadeddata", ()=>{
-    // update song total duration
     let mainAdDuration = mainAudio.duration;
     let totalMin = Math.floor(mainAdDuration / 60);
     let totalSec = Math.floor(mainAdDuration % 60);
@@ -151,7 +145,6 @@ mainAudio.addEventListener("timeupdate", (e)=>{
     }
     musicDuartion.innerText = `${totalMin}:${totalSec}`;
   });
-  // update playing song current time
   let currentMin = Math.floor(currentTime / 60);
   let currentSec = Math.floor(currentTime % 60);
   if(currentSec < 10){ 
@@ -163,7 +156,6 @@ mainAudio.addEventListener("timeupdate", (e)=>{
 
 
 let isDragging = false;
-// initialize variables for mouse input
 
 progressBar.addEventListener("mousedown", (e) => {
   isDragging = true;
@@ -171,9 +163,9 @@ progressBar.addEventListener("mousedown", (e) => {
 
 document.addEventListener("mousemove", (e) => {
   if (isDragging) {
-    const progressWidth = progressArea.clientWidth; //getting width of progress bar
-    let clickedOffsetX = e.offsetX; //getting offset x value
-    let songDuration = mainAudio.duration; //getting song total duration
+    const progressWidth = progressArea.clientWidth; 
+    let clickedOffsetX = e.offsetX; 
+    let songDuration = mainAudio.duration; 
     if (isFinite(clickedOffsetX) && isFinite(songDuration)) {
       mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
       playMusic(); 
@@ -190,9 +182,9 @@ document.addEventListener("mouseup", () => {
 
 // update playing song currentTime on according to the progress bar width
 progressArea.addEventListener("click", (e)=>{
-  const progressWidth = progressArea.clientWidth; //getting width of progress bar
-  let clickedOffsetX = e.offsetX; //getting offset x value
-  let songDuration = mainAudio.duration; //getting song total duration
+  const progressWidth = progressArea.clientWidth;
+  let clickedOffsetX = e.offsetX;
+  let songDuration = mainAudio.duration;
   
   mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
   playMusic(); 
@@ -224,19 +216,19 @@ mainAudio.addEventListener("ended", ()=>{
   let getText = repeatBtn.innerText; 
   switch(getText){
     case "repeat":
-      nextMusic(); //calling nextMusic function
+      nextMusic();
       break;
     case "repeat_one":
-      mainAudio.currentTime = 0; //setting audio current time to 0
+      mainAudio.currentTime = 0; 
       loadMusic(musicIndex);
       playMusic();
       break;
     case "shuffle":
-      let randIndex = Math.floor((Math.random() * allMusic.length) + 1); //genereting random index/numb with max range of array length
+      let randIndex = Math.floor((Math.random() * allMusic.length) + 1);
       do{
         randIndex = Math.floor((Math.random() * allMusic.length) + 1);
-      }while(musicIndex == randIndex); //this loop run until the next random number won't be the same of current musicIndex
-      musicIndex = randIndex; //passing randomIndex to musicIndex
+      }while(musicIndex == randIndex); 
+      musicIndex = randIndex;
       loadMusic(musicIndex);
       playMusic();
       playingSong();
@@ -253,7 +245,6 @@ closemoreMusic.addEventListener("click", ()=>{
 });
 
 const ulTag = wrapper.querySelector("ul");
-// let create li tags according to array length for list
 for (let i = 0; i < allMusic.length; i++) {
   let liTag = `<li li-index="${i + 1}">
                 <div class="row">
@@ -274,8 +265,8 @@ for (let i = 0; i < allMusic.length; i++) {
     if(totalSec < 10){
       totalSec = `0${totalSec}`;
     };
-    liAudioDuartionTag.innerText = `${totalMin}:${totalSec}`; //passing total duation of song
-    liAudioDuartionTag.setAttribute("t-duration", `${totalMin}:${totalSec}`); //adding t-duration attribute with total duration value
+    liAudioDuartionTag.innerText = `${totalMin}:${totalSec}`; 
+    liAudioDuartionTag.setAttribute("t-duration", `${totalMin}:${totalSec}`);
   });
 }
 
@@ -304,7 +295,7 @@ function playingSong(){
 //particular li clicked function
 function clicked(element){
   let getLiIndex = element.getAttribute("li-index");
-  musicIndex = getLiIndex; //updating current song index with clicked li index
+  musicIndex = getLiIndex; 
   loadMusic(musicIndex);
   playMusic();
   playingSong();
