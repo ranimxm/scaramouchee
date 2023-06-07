@@ -153,14 +153,7 @@ mainAudio.addEventListener("timeupdate", (e)=>{
   }
   musicCurrentTime.innerText = `${currentMin}:${currentSec}`;
 
-    // Update media session progress bar
-    if ('mediaSession' in navigator && navigator.mediaSession.setPositionState) {
-      navigator.mediaSession.setPositionState({
-        duration,
-        playbackRate: 1,
-        position: currentTime
-      });
-    }
+
   });
 
 
