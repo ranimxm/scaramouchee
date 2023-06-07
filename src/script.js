@@ -156,29 +156,60 @@ mainAudio.addEventListener("timeupdate", (e)=>{
 
 
 let isDragging = false;
+let progressAreaWidth = progressArea.offsetWidth;
 
 progressBar.addEventListener("mousedown", (e) => {
   isDragging = true;
 });
 
-document.addEventListener("mousemove", (e) => {
+progressArea.addEventListener("mousemove", (e) => {
   if (isDragging) {
-    const progressWidth = progressArea.clientWidth; 
-    let clickedOffsetX = e.offsetX; 
-    let songDuration = mainAudio.duration; 
-    if (isFinite(clickedOffsetX) && isFinite(songDuration)) {
-      mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
-      playMusic(); 
-      playingSong();
-    }
-  } 
- 
-});
+    const clickedOffsetX = e.offsetX;
+    const progressWidth = Math.min(clickedOffsetX, progressAreaWidth);
+    const songDuration = mainAudio.duration;
 
+    if (isFinite(songDuration)) {
+      const currentTime = (progressWidth / progressAreaWidth) * songDuration;
+      mainAudio.currentTime = currentTime;
+    }
+  }
+});
 
 document.addEventListener("mouseup", () => {
-  isDragging = false;
+  if (isDragging) {
+    isDragging = false;
+    playMusic();
+    playingSong();
+  }
 });
+
+// Touch events for mobile devices
+progressBar.addEventListener("touchstart", (e) => {
+  isDragging = true;
+});
+
+progressArea.addEventListener("touchmove", (e) => {
+  if (isDragging) {
+    const touch = e.touches[0];
+    const clickedOffsetX = touch.clientX - progressArea.getBoundingClientRect().left;
+    const progressWidth = Math.min(clickedOffsetX, progressAreaWidth);
+    const songDuration = mainAudio.duration;
+
+    if (isFinite(songDuration)) {
+      const currentTime = (progressWidth / progressAreaWidth) * songDuration;
+      mainAudio.currentTime = currentTime;
+    }
+  }
+});
+
+document.addEventListener("touchend", () => {
+  if (isDragging) {
+    isDragging = false;
+    playMusic();
+    playingSong();
+  }
+});
+
 
 // update playing song currentTime on according to the progress bar width
 progressArea.addEventListener("click", (e)=>{

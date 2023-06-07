@@ -1,4 +1,3 @@
-
  self.addEventListener("install", e => {
    e.waitUntil(
      caches.open("statics").then(cache => {
@@ -40,5 +39,3 @@ self.addEventListener("install", e => {
            })
          );
       });
-
-      
