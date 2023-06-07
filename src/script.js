@@ -80,13 +80,27 @@ function setMediaMetadata() {
   
 };
 
-// navigator.mediaSession.metadata.artwork = [  { src: 'image/logo2.png', sizes: '48x48' },  { src: 'image/logo1.png', sizes: '96x96' }];
+function showNotification() {
+  if (Notification.permission === "granted") {
+    const musicTitle = allMusic[musicIndex - 1].name;
+    const musicArtist = allMusic[musicIndex - 1].artist;
+    const notification = new Notification("Now Playing", {
+      body: `${musicTitle} - ${musicArtist}`,
+      icon: `image/${allMusic[musicIndex - 1].src}.png`
+    });
+    // Automatically close the notification after a few seconds
+    setTimeout(notification.close.bind(notification), 3000);
+  }
+}
+
 
 //play music function
 function playMusic(){
   wrapper.classList.add("paused");
   playPauseBtn.querySelector("i").innerText = "pause";
-  mainAudio.play();  
+  mainAudio.play(); 
+  
+  showNotification();
 };
 
 //pause music function
@@ -94,6 +108,8 @@ function pauseMusic(){
   wrapper.classList.remove("paused");
   playPauseBtn.querySelector("i").innerText = "play_arrow";
   mainAudio.pause();
+
+  showNotification();
 };
 
 //prev music function
@@ -103,7 +119,8 @@ function prevMusic(){
   loadMusic(musicIndex);
   playMusic();
   playingSong(); 
-  setMediaMetadata();
+  // setMediaMetadata();
+  showNotification();
 };
 
 //next music function
@@ -113,7 +130,8 @@ function nextMusic(){
   loadMusic(musicIndex);
   playMusic();
   playingSong(); 
-  setMediaMetadata();
+  showNotification();
+  // setMediaMetadata();
 };
 
 // play or pause button event
