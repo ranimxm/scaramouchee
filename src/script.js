@@ -60,32 +60,32 @@ function loadMusic(indexNumb){
 
 function setMediaMetadata() {
   if ('mediaSession' in navigator) {
+    // console.log("it works!")
     navigator.mediaSession.metadata.title = allMusic[musicIndex - 1].name;
     navigator.mediaSession.metadata.artist = allMusic[musicIndex - 1].artist;
-    navigator.mediaSession.metadata.artwork = [{
-      src: `image/${allMusic[musicIndex - 1].src}.png`,
-      sizes: '512x512',
-      type: 'image/png'
-    }];
-  }
-
-  navigator.mediaSession.setActionHandler('play', playMusic);
-  navigator.mediaSession.setActionHandler('pause', pauseMusic);
-  navigator.mediaSession.setActionHandler('previoustrack', prevMusic);
+    navigator.mediaSession.metadata.artwork = [{ src: `image/${allMusic[musicIndex - 1].src}.png` }];
+    // navigator.mediaSession.metadata.shortcutIcon = [  { src: 'image/logo2.png', sizes: '48x48' },  { src: 'image/logo1.png', sizes: '96x96' }];
+    } else{
+      console.log("it doesnt work");
+    };
+    navigator.mediaSession.setActionHandler('play', playMusic);
+    navigator.mediaSession.setActionHandler('pause', pauseMusic);
+    navigator.mediaSession.setActionHandler('previoustrack', prevMusic);
   navigator.mediaSession.setActionHandler('nexttrack', nextMusic);
-
-  // Set initial media session position state
+  
   if ('mediaSession' in navigator && navigator.mediaSession.setPositionState) {
     const duration = mainAudio.duration;
     const currentTime = mainAudio.currentTime;
 
-    navigator.mediaSession.setPositionState({
-      duration,
-      playbackRate: 1,
-      position: currentTime
-    });
+    if (isFinite(duration)) {
+      navigator.mediaSession.setPositionState({
+        duration,
+        playbackRate: 1,
+        position: currentTime
+      });
+    }
   }
-}
+};
 
 // navigator.mediaSession.metadata.artwork = [  { src: 'image/logo2.png', sizes: '48x48' },  { src: 'image/logo1.png', sizes: '96x96' }];
 
