@@ -48,6 +48,10 @@ window.addEventListener("load", () => {
   loadMusic(musicIndex);
   playingSong();
   setMediaMetadata();
+
+  if (Notification.permission !== "granted") {
+    Notification.requestPermission();
+  }
 });
 
 function loadMusic(indexNumb){
@@ -71,7 +75,8 @@ function setMediaMetadata() {
     navigator.mediaSession.setActionHandler('play', playMusic);
     navigator.mediaSession.setActionHandler('pause', pauseMusic);
     navigator.mediaSession.setActionHandler('previoustrack', prevMusic);
-  navigator.mediaSession.setActionHandler('nexttrack', nextMusic);
+    navigator.mediaSession.setActionHandler('nexttrack', nextMusic);
+    
   
 };
 
@@ -152,7 +157,6 @@ mainAudio.addEventListener("timeupdate", (e)=>{
     currentSec = `0${currentSec}`;
   }
   musicCurrentTime.innerText = `${currentMin}:${currentSec}`;
-
 
   });
 
