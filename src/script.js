@@ -73,18 +73,6 @@ function setMediaMetadata() {
     navigator.mediaSession.setActionHandler('previoustrack', prevMusic);
   navigator.mediaSession.setActionHandler('nexttrack', nextMusic);
   
-  if ('mediaSession' in navigator && navigator.mediaSession.setPositionState) {
-    const duration = mainAudio.duration;
-    const currentTime = mainAudio.currentTime;
-
-    if (isFinite(duration)) {
-      navigator.mediaSession.setPositionState({
-        duration,
-        playbackRate: 1,
-        position: currentTime
-      });
-    }
-  }
 };
 
 // navigator.mediaSession.metadata.artwork = [  { src: 'image/logo2.png', sizes: '48x48' },  { src: 'image/logo1.png', sizes: '96x96' }];
